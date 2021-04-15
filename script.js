@@ -9,16 +9,16 @@ const addBookSubmit = document.getElementById('add-book');
 
 
 //Object constructor
-function Book (title, author, pages, read) {
+function Book (title, author, pages, isRead) {
     this.title = title;
     this.author = author;
     this.pages = pages;
-    this.read = read;
+    this.isRead = isRead;
 }
 
 //Key functions
-function addBookToLibrary (title, author, pages) {
-    const newBook = new Book(title, author, pages);
+function addBookToLibrary (title, author, pages, isRead) {
+    const newBook = new Book(title, author, pages, isRead);
     //add book to library array
     myLibrary.push(newBook);
 }
@@ -26,18 +26,30 @@ function addBookToLibrary (title, author, pages) {
 function createBookCard (book) {
     const newBookCard = document.createElement('div');
         newBookCard.classList.add('book-card');
-        
+
+
         const list = document.createElement('ul');
         list.classList.add('book-details');
         const bookSummary = document.createElement('li');
         bookSummary.textContent = `${book.title} by ${book.author}`
 
         const pageSummary = document.createElement('li');
-        pageSummary.textContent = `${book.pages} pages long`
+        pageSummary.textContent = `${book.pages} pages`
+
+        const readStatusButton = document.createElement('button');
+        
+        if(book.isRead) {
+            readStatusButton.textContent = 'Mark Unread';
+            readStatusButton.classList.add('book-read');
+        } else {
+            readStatusButton.textContent = 'Mark Read';
+            readStatusButton.classList.add('book-unread');
+        }
 
         list.appendChild(bookSummary);
         list.appendChild(pageSummary);
         newBookCard.appendChild(list);
+        newBookCard.appendChild(readStatusButton);
         return newBookCard;
 }
 
@@ -48,6 +60,15 @@ function displayBooks () {
         const newBookCard = createBookCard(book);
         library.appendChild(newBookCard);
     })
+}
+
+function toggleRead (book) {
+    if (book.isRead) {
+        book['isRead'] = false;
+        
+    } else {
+        book['isRead'] = true;
+    }
 }
 
 showForm.addEventListener('click', () => {
@@ -61,9 +82,10 @@ addBookForm.addEventListener('submit', e => {
     const title = e.target.elements.title.value;
     const author = e.target.elements.author.value;
     const pages = e.target.elements.pages.value;
+    const isRead = e.target.isRead.checked;
 
-    addBookToLibrary(title, author, pages);
-    
+    addBookToLibrary(title, author, pages, isRead);
+
     addBookForm.reset();
     addBookForm.style.display = "none";
     showForm.style.display = "inline-block";
