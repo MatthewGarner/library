@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>The Library</title>
+    <meta name="author" content="Matthew">
+    <meta name="description" content="Small library app">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="style.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <div id="page-container">
+      <div id="title-area">
+        <h1 id="main-title">Your Library</h1>
+      </div>
+      <main>
+        <div id="add-book-area">
+          <button id="show-form">Add New Book</button>
+          <form id="add-new-book" class="simple-form">
+            <label for="title">
+              Title<input type="text" id="title" name="book-title"> 
+            </label>
+            <label for="author">
+              Author<input type="text" id="author" name="book-author"> 
+            </label>
+            <label for="pages">
+              # of pages<input type="number" id="pages" name="book-pages"> 
+            </label>
+            <button type="submit" id="add-book" class="main-cta-button">Add Book</button>
+          </form>
+        </div>
+        <div id="books-library">
+
+        </div>
+      </main>
+
+  </body>
+ <script src="script.js"></script>
+</html>
