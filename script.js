@@ -16,6 +16,15 @@ function Book (title, author, pages, isRead) {
     this.isRead = isRead;
 }
 
+Book.prototype.toggleRead = function() {
+    if (this.isRead) {
+        this.isRead = false;
+    } else {
+        this.isRead = true;
+    }
+}
+
+
 //Key functions
 function addBookToLibrary (title, author, pages, isRead) {
     const newBook = new Book(title, author, pages, isRead);
@@ -26,12 +35,17 @@ function addBookToLibrary (title, author, pages, isRead) {
 function createBookCard (book) {
     const newBookCard = document.createElement('div');
         newBookCard.classList.add('book-card');
+        newBookCard.setAttribute('id', myLibrary.indexOf(book));
 
 
         const list = document.createElement('ul');
-        list.classList.add('book-details');
-        const bookSummary = document.createElement('li');
-        bookSummary.textContent = `${book.title} by ${book.author}`
+        list.classList.add('title');
+
+        const Title = document.createElement('li');
+        Title.textContent = book.title;
+
+        const authorName = document.createElement('li');
+        authorName.textContent = `by ${book.author}`;
 
         const pageSummary = document.createElement('li');
         pageSummary.textContent = `${book.pages} pages`
@@ -46,10 +60,17 @@ function createBookCard (book) {
             readStatusButton.classList.add('book-unread');
         }
 
-        list.appendChild(bookSummary);
+        list.appendChild(Title);
+        list.appendChild(authorName);
         list.appendChild(pageSummary);
         newBookCard.appendChild(list);
         newBookCard.appendChild(readStatusButton);
+
+        readStatusButton.addEventListener('click', () => {
+            book.isRead = !book.isRead;
+            displayBooks();
+        })
+
         return newBookCard;
 }
 
@@ -62,14 +83,9 @@ function displayBooks () {
     })
 }
 
-function toggleRead (book) {
-    if (book.isRead) {
-        book['isRead'] = false;
-        
-    } else {
-        book['isRead'] = true;
-    }
-}
+function findBookInArray (index) {
+
+} 
 
 showForm.addEventListener('click', () => {
     addBookForm.style.display = "block";
@@ -92,6 +108,17 @@ addBookForm.addEventListener('submit', e => {
     displayBooks();
 })
 
-addBookToLibrary('Hamlet', 'Space', 400);
-addBookToLibrary('Glemnar', 'Rete', 300);
+addBookToLibrary('Hamlet', 'Space', 400, false);
+addBookToLibrary('Glemnar', 'Rete', 300, true);
+
+
+
+const books1 = myLibrary[0];
+const booksLoc = myLibrary.indexOf(books1);
+
+console.log(booksLoc);
+books1.toggleRead();
+
+
+
 displayBooks();
