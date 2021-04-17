@@ -51,6 +51,8 @@ function createBookCard (book) {
         pageSummary.textContent = `${book.pages} pages`
 
         const readStatusButton = document.createElement('button');
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'Remove';
         
         if(book.isRead) {
             readStatusButton.textContent = 'Mark Unread';
@@ -65,9 +67,17 @@ function createBookCard (book) {
         list.appendChild(pageSummary);
         newBookCard.appendChild(list);
         newBookCard.appendChild(readStatusButton);
+        newBookCard.appendChild(removeButton);
 
         readStatusButton.addEventListener('click', () => {
             book.isRead = !book.isRead;
+            displayBooks();
+        })
+
+        removeButton.addEventListener('click', () => {
+            const bookLoc = myLibrary.indexOf(book);
+            myLibrary.splice(bookLoc, 1);
+
             displayBooks();
         })
 
