@@ -9,18 +9,22 @@ const addBookSubmit = document.getElementById('add-book');
 
 
 //Object constructor
-function Book (title, author, pages, isRead) {
+//Refactor as class
+
+class Book {
+    constructor(title, author, pages, isRead) {
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.isRead = isRead;
-}
+    }
 
-Book.prototype.toggleRead = function() {
+    toggleRead() {
     if (this.isRead) {
         this.isRead = false;
     } else {
         this.isRead = true;
+    };  
     }
 }
 
