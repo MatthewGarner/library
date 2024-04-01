@@ -1,7 +1,4 @@
 # library
 
-Basic library app made with HTML/CSS/JS
-
-To Do:
-- Nice-ify!
-- Implement local storage to save down user's library
+Library project with HTML/CSS/JS [via Odin Project](https://www.theodinproject.com/lessons/node-path-javascript-library)
+Restarted Apr 2024

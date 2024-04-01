@@ -5,69 +5,15 @@ body {
     box-sizing: border-box;
 }
 
-h1 {
-    font-size: 7vh;
-    font-weight: 500;
-    color: rgb(199, 62, 226);
+.library-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-auto-rows: 100%;
+    column-gap: 30px;
+    row-gap: 30px;
 }
-
-input {
-    margin-left: 1vw;
-}
-
-.simple-form {
-    /* Center the form on the page */
-    margin: 0 auto;
-    width: 80vw;
-    /* Form outline */
-    padding: 1em;
-    border: 1px solid #CCC;
-    border-radius: 1em;
-  }
 
 .book-card {
-    border: 1px solid rgb(14, 12, 19);
-    border-radius: 10px; 
-    padding: .5rem;
-    text-align: center;
-}
-
-.book-read {
-    background-color: tomato;
-}
-
-.book-unread {
-    background-color: green;
-}
-  
-#show-form {
-   background-color: teal;
-   border-radius: 30px;
-   border-style: hidden;
-}
-
-
-#add-new-book {
-    display:none;
-}
-
-#title-area {
-    width: 100vw;
-    border: transparent;
-    border-bottom: lightpink;
-    border-style: solid;
-    margin-bottom: 2em;
-}
-
-#books-library {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 5vh 5vw;
-    margin-top: 5vw;
-}
-
-
-
-li {
-    list-style-type: none;
+    display: flex;
+    background-color: rgb(255, 213, 0);
 }

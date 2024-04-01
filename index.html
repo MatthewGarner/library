@@ -11,34 +11,13 @@
   </head>
 
   <body>
-    <div id="page-container">
-      <div id="title-area">
-        <h1 id="main-title">Your Library</h1>
+    <div class="page-container">
+      <h1>The Library</h1>
+      <button class="add-book" onclick="addBookToLibrary()">Add Book</button>
+      <div class="library-container">
+
       </div>
-      <main>
-        <div id="add-book-area">
-          <button id="show-form">Add New Book</button>
-          <form id="add-new-book" class="simple-form">
-            <label for="title">
-              Title<input type="text" id="title" name="book-title"> 
-            </label>
-            <label for="author">
-              Author<input type="text" id="author" name="book-author"> 
-            </label>
-            <label for="pages">
-              # of pages<input type="number" id="pages" name="book-pages"> 
-            </label>
-            <label for="isRead">
-              I've read this<input type="checkbox" id="isRead" name="book-read"> 
-            </label>
-            <button type="submit" id="add-book" class="main-cta-button">Add Book</button>
-          </form>
-        </div>
-        <div id="books-library">
-
-        </div>
-      </main>
-
+    </div>
   </body>
  <script src="script.js"></script>
 </html>

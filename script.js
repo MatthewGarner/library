@@ -1,138 +1,58 @@
-//Global Vars
-let myLibrary = [];
+const myLibrary = [
+{title: 'Jean Bean', author: 'clarpo', pages: 100},
+{title: 'Jean Bean', author: 'clarpo', pages: 100},
+{title: 'Jean Bean', author: 'clarpo', pages: 100},
+{title: 'Jean Bean', author: 'clarpo', pages: 100},
+{title: 'Jean Bean', author: 'clarpo', pages: 100},
+{title: 'Jean Bean', author: 'clarpo', pages: 100},
+{title: 'Jean Bean', author: 'clarpo', pages: 100}
 
-//target dynamic areas
-const library = document.getElementById('books-library');
-const showForm = document.getElementById('show-form');
-const addBookForm = document.getElementById('add-new-book');
-const addBookSubmit = document.getElementById('add-book');
+];
 
-
-//Object constructor
-//Refactor as class
-
-class Book {
-    constructor(title, author, pages, isRead) {
+//Book Constructor
+function Book(title, author, pageCount) {
     this.title = title;
     this.author = author;
-    this.pages = pages;
-    this.isRead = isRead;
-    }
-
-    toggleRead() {
-    if (this.isRead) {
-        this.isRead = false;
-    } else {
-        this.isRead = true;
-    };  
-    }
+    this.pageCount = pageCount;
+    this.isRead = false
 }
 
 
-//Key functions
-function addBookToLibrary (title, author, pages, isRead) {
-    const newBook = new Book(title, author, pages, isRead);
-    //add book to library array
-    myLibrary.push(newBook);
+function addBookToLibrary() {
+    //Create a new book and add it to the library
+  let title = prompt("What's the book title?");
+  let author = prompt("Who is the book's author?");
+  let pageCount = prompt("How many pages?");
+
+  const newBook = new Book(title, author, pageCount);
+
+  myLibrary.push(newBook);
+  displayAllBooks();
+  return myLibrary;
 }
 
-function createBookCard (book) {
-    const newBookCard = document.createElement('div');
-        newBookCard.classList.add('book-card');
-        newBookCard.setAttribute('id', myLibrary.indexOf(book));
+function createBookCard(book) {
+    //take a book object and create a book element for the UI
+    const bookCard = document.createElement('div');
+    bookCard.classList.add('book-card');
+    
+    const titleAndAuthor = document.createElement('h2');
+    titleAndAuthor.textContent = `${book.title} by ${book.author}`;
+    bookCard.appendChild(titleAndAuthor);
 
-
-        const list = document.createElement('ul');
-        list.classList.add('title');
-
-        const Title = document.createElement('li');
-        Title.textContent = book.title;
-
-        const authorName = document.createElement('li');
-        authorName.textContent = `by ${book.author}`;
-
-        const pageSummary = document.createElement('li');
-        pageSummary.textContent = `${book.pages} pages`
-
-        const readStatusButton = document.createElement('button');
-        const removeButton = document.createElement('button');
-        removeButton.textContent = 'Remove';
-        
-        if(book.isRead) {
-            readStatusButton.textContent = 'Mark Unread';
-            readStatusButton.classList.add('book-read');
-        } else {
-            readStatusButton.textContent = 'Mark Read';
-            readStatusButton.classList.add('book-unread');
-        }
-
-        list.appendChild(Title);
-        list.appendChild(authorName);
-        list.appendChild(pageSummary);
-        newBookCard.appendChild(list);
-        newBookCard.appendChild(readStatusButton);
-        newBookCard.appendChild(removeButton);
-
-        readStatusButton.addEventListener('click', () => {
-            book.isRead = !book.isRead;
-            displayBooks();
-        })
-
-        removeButton.addEventListener('click', () => {
-            const bookLoc = myLibrary.indexOf(book);
-            myLibrary.splice(bookLoc, 1);
-
-            displayBooks();
-        })
-
-        return newBookCard;
+    return bookCard;
 }
 
-function displayBooks () {
-    library.textContent = '';
+function displayAllBooks() {
+    const libraryContainer = document.querySelector('.library-container');
+    libraryContainer.replaceChildren();
 
-    myLibrary.forEach(book => {
-        const newBookCard = createBookCard(book);
-        library.appendChild(newBookCard);
+    myLibrary.forEach((book) => {
+        const newCard = createBookCard(book);
+        libraryContainer.appendChild(newCard);
     })
+    //iterate over array of books
+    //for each - display on the page
 }
 
-function findBookInArray (index) {
-
-} 
-
-showForm.addEventListener('click', () => {
-    addBookForm.style.display = "block";
-    showForm.style.display = "none";
-})
-
-addBookForm.addEventListener('submit', e => {
-    e.preventDefault();
-
-    const title = e.target.elements.title.value;
-    const author = e.target.elements.author.value;
-    const pages = e.target.elements.pages.value;
-    const isRead = e.target.isRead.checked;
-
-    addBookToLibrary(title, author, pages, isRead);
-
-    addBookForm.reset();
-    addBookForm.style.display = "none";
-    showForm.style.display = "inline-block";
-    displayBooks();
-})
-
-addBookToLibrary('Hamlet', 'Space', 400, false);
-addBookToLibrary('Glemnar', 'Rete', 300, true);
-
-
-
-const books1 = myLibrary[0];
-const booksLoc = myLibrary.indexOf(books1);
-
-console.log(booksLoc);
-books1.toggleRead();
-
-
-
-displayBooks();
+displayAllBooks();
