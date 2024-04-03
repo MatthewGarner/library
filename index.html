@@ -13,7 +13,26 @@
   <body>
     <div class="page-container">
       <h1>The Library</h1>
-      <button class="add-book" onclick="addBookToLibrary()">Add Book</button>
+      <dialog>
+        <form action="GET" class="book-details-form">
+          <div>
+            <label for="title">Title</label>
+            <input type="text" name="title" id="title">
+          </div>
+          <div>
+            <label for="author">Author</label>
+            <input type="text" name="author" id="author">
+          </div>
+          <div>
+            <label for="pages">Page count</label>
+            <input type="number" name="pages" id="pages">
+          </div>
+          <button type="submit" class="submit-form" autofocus>Submit</button>
+          <button formmethod="dialog" class="close-modal">Cancel</button>
+        </form>
+        
+        </dialog> 
+      <button class="add-button">Add Book</button>
       <div class="library-container">
 
       </div>
