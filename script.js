@@ -13,13 +13,13 @@ const bookDetailsForm = document.querySelector('.book-details-form');
 
 //Initial Library for testing
 const myLibrary = [
-{title: 'Jean Bean', author: 'clarpo', pages: 100},
-{title: 'Jean Bean', author: 'clarpo', pages: 100},
-{title: 'Jean Bea', author: 'clarpo', pages: 100},
-{title: 'Jean Bean', author: 'clarpo', pages: 100},
-{title: 'Jean Bean', author: 'clarpo', pages: 100},
-{title: 'Jean Bean', author: 'clarpo', pages: 100},
-{title: 'Jean Bean', author: 'clarpo', pages: 100}
+{title: 'Jean Bean', author: 'clarpo', pages: 100, isRead: false},
+{title: 'Jean Bean', author: 'clarpo', pages: 100, isRead: false},
+{title: 'Jean Bea', author: 'clarpo', pages: 100, isRead: false},
+{title: 'Jean Bean', author: 'clarpo', pages: 100, isRead: true},
+{title: 'Jean Bean', author: 'clarpo', pages: 100, isRead: false},
+{title: 'Jean Bean', author: 'clarpo', pages: 100, isRead: false},
+{title: 'Jean Bean', author: 'clarpo', pages: 100, isRead: false}
 ];
 
 //Book Constructor
@@ -28,6 +28,10 @@ function Book(title, author, pageCount) {
     this.author = author;
     this.pageCount = pageCount;
     this.isRead = false
+}
+
+Book.prototype.toggleRead = function() {
+    this.isRead = !this.isRead;
 }
 
 //Add listeners to elements
@@ -70,8 +74,14 @@ function handleAddBookSubmission (e) {
 function removeBookFromLibrary(e) {
     const indexToBeRemoved = e.target.dataset.index;
 
-    
     myLibrary.splice(indexToBeRemoved, 1);
+    displayAllBooks();
+}
+
+function handleReadStatusUpdate (e) {
+    const indexToBeUpdated = e.target.dataset.index;
+
+    myLibrary[indexToBeUpdated].isRead = !myLibrary[indexToBeUpdated].isRead;
     displayAllBooks();
 }
 
@@ -84,11 +94,28 @@ function createBookCard(book) {
     const titleAndAuthor = document.createElement('h2');
     titleAndAuthor.textContent = `${book.title} by ${book.author}`;
 
-    const removeBook = document.createElement('button');
-    removeBook.classList.add('remove-book-button');
+    const updateReadStatusButton = document.createElement('button');
+    updateReadStatusButton.classList.add('update-read-status-button');
+
+    const isRead = document.createElement('p');
+    if (book.isRead) {
+        isRead.textContent = 'Read it';
+        updateReadStatusButton.textContent = 'Mark Unread';
+    }
+    else {
+        isRead.textContent = 'Not read yet!';
+        updateReadStatusButton.textContent = 'Mark Read';
+    }
+    
+    const removeBookButton = document.createElement('button');
+    removeBookButton.classList.add('remove-book-button');
+    removeBookButton.textContent = 'Remove book';
 
     bookCard.appendChild(titleAndAuthor);
-    bookCard.appendChild(removeBook);
+    bookCard.appendChild(isRead);
+    bookCard.appendChild(updateReadStatusButton);
+    bookCard.appendChild(removeBookButton);
+    
 
     return bookCard;
 }
@@ -100,12 +127,16 @@ function displayAllBooks() {
 
     myLibrary.forEach((book) => {
         const newCard = createBookCard(book);
-
         currentIndex = myLibrary.indexOf(book);
+
         removeButton = newCard.querySelector('.remove-book-button');
         removeButton.setAttribute('data-index', currentIndex);
         removeButton.addEventListener('click', removeBookFromLibrary);
-        removeButton.textContent = 'Remove book';
+
+        updateReadStatusButton = newCard.querySelector('.update-read-status-button');
+        updateReadStatusButton.setAttribute('data-index', currentIndex);
+        updateReadStatusButton.addEventListener('click', handleReadStatusUpdate);
+        
 
         libraryContainer.appendChild(newCard);
     })
