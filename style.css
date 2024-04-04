@@ -1,8 +1,13 @@
-body {
+html {
     font-family: Georgia, 'Times New Roman', Times, serif;
     text-align: center;
     background-color: rgb(185, 240, 241);
     box-sizing: border-box;
+    font-size: 16px;
+}
+
+h2 {
+    font-size: 1.2rem;
 }
 
 .library-container {
@@ -11,11 +16,21 @@ body {
     grid-auto-rows: 100%;
     column-gap: 30px;
     row-gap: 30px;
+    padding: 10px;
 }
 
 .book-card {
     display: flex;
     background-color: rgb(255, 213, 0);
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+
+.book-card button {
+    height: auto;
+    width: 30%;
+    align-self: center;
 }
 
 ::backdrop {

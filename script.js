@@ -8,8 +8,8 @@ const dialog = document.querySelector("dialog");
 //buttons
 const addBookButton = document.querySelector('.add-button');
 const submitFormButton = document.querySelector('.submit-form');
-const closeModalButton = document.querySelector('.close-modal')
-const bookDetailsForm = document.querySelector('.book-details-form')
+const closeModalButton = document.querySelector('.close-modal');
+const bookDetailsForm = document.querySelector('.book-details-form');
 
 //Initial Library for testing
 const myLibrary = [
@@ -30,26 +30,23 @@ function Book(title, author, pageCount) {
     this.isRead = false
 }
 
-//Event handlers
+//Add listeners to elements
 addBookButton.addEventListener('click', () => {
     dialog.showModal();
 });
 
 closeModalButton.addEventListener('click', () => {
-    dialog.close()
+    dialog.close();
 });
 
 submitFormButton.addEventListener('click', handleAddBookSubmission);
 
+
 //Functions
 
 //Create a new book and add it to the library
-function addBookToLibrary() {
+function addBookToLibrary(title, author, pageCount) {
     
-  let title = prompt("What's the book title?");
-  let author = prompt("Who is the book's author?");
-  let pageCount = prompt("How many pages?");
-
   const newBook = new Book(title, author, pageCount);
 
   myLibrary.push(newBook);
@@ -57,18 +54,26 @@ function addBookToLibrary() {
   return myLibrary;
 }
 
+//Event handlers
+
 function handleAddBookSubmission (e) {
     e.preventDefault();
     const formData = new FormData(e.target.form);
     const formProps = Object.fromEntries(formData);
 
-    console.log(formData);
-    console.log(formProps);
+    addBookToLibrary(formProps.title, formProps.author, formProps.pageCount);
+
     dialog.close();
     bookDetailsForm.reset();
-
 }
 
+function removeBookFromLibrary(e) {
+    const indexToBeRemoved = e.target.dataset.index;
+
+    
+    myLibrary.splice(indexToBeRemoved, 1);
+    displayAllBooks();
+}
 
 
 //Create a book element for the UI from book obj
@@ -78,7 +83,12 @@ function createBookCard(book) {
     
     const titleAndAuthor = document.createElement('h2');
     titleAndAuthor.textContent = `${book.title} by ${book.author}`;
+
+    const removeBook = document.createElement('button');
+    removeBook.classList.add('remove-book-button');
+
     bookCard.appendChild(titleAndAuthor);
+    bookCard.appendChild(removeBook);
 
     return bookCard;
 }
@@ -90,6 +100,13 @@ function displayAllBooks() {
 
     myLibrary.forEach((book) => {
         const newCard = createBookCard(book);
+
+        currentIndex = myLibrary.indexOf(book);
+        removeButton = newCard.querySelector('.remove-book-button');
+        removeButton.setAttribute('data-index', currentIndex);
+        removeButton.addEventListener('click', removeBookFromLibrary);
+        removeButton.textContent = 'Remove book';
+
         libraryContainer.appendChild(newCard);
     })
     
